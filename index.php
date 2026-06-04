@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORSystem - Linear Programming Decision Support System</title>
+    <title>ORSystem - Campus Event Budget Allocation System</title>
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -56,23 +55,23 @@
         }
     </style>
 </head>
+
 <body>
 
-    <!-- HERO SECTION -->
     <div class="hero-section">
         <h1>ORSystem</h1>
+        <p>Campus Event Budget Allocation System</p>
         <p>Linear Programming Decision Support System</p>
 
         <a href="login.php" class="btn btn-light btn-custom me-2">
-        Login
-		</a>
+            Login
+        </a>
 
-		<a href="register.php" class="btn btn-outline-light btn-custom">
-        Register
-		</a>
+        <a href="register.php" class="btn btn-outline-light btn-custom">
+            Register
+        </a>
     </div>
 
-    <!-- PROJECT OVERVIEW -->
     <div class="container mt-5">
 
         <div class="card card-custom p-4 mb-4">
@@ -84,28 +83,30 @@
             </p>
 
             <p>
-                This system helps users solve optimization problems such as
-                product mix optimization, budget allocation, and production planning.
+                This system helps student clubs allocate their total budget to different
+                activities such as catering, marketing, and equipment.
             </p>
 
             <p>
-                Users can enter:
+                The purpose of this system is to help student clubs make better budget
+                allocation decisions while reaching the highest number of students.
             </p>
 
+            <p>Users can enter:</p>
+
             <ul>
-                <li>Decision Variables</li>
-                <li>Objective Function</li>
-                <li>Constraints</li>
-                <li>Optimization Type (Maximize / Minimize)</li>
+                <li>Decision variables</li>
+                <li>Objective function</li>
+                <li>Budget constraints</li>
+                <li>Optimization type: Maximize or Minimize</li>
             </ul>
 
             <p>
-                The system will generate the optimal solution and display
-                the best objective value.
+                The system will generate the optimal solution and display the best
+                objective value.
             </p>
         </div>
 
-        <!-- FEATURES -->
         <div class="card card-custom p-4 mb-4">
             <h2 class="section-title">System Features</h2>
 
@@ -142,7 +143,6 @@
             </div>
         </div>
 
-        <!-- TEAM MEMBERS -->
         <div class="card card-custom p-4 mb-4">
             <h2 class="section-title">Group Members</h2>
 
@@ -185,10 +185,9 @@
 
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p class="mb-0">
-            ORSystem © 2026 | Operational Research Group 1 Project
+            ORSystem © 2026 | Operational Research Group Project
         </p>
     </footer>
 
