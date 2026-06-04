@@ -25,12 +25,18 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 $row = mysqli_fetch_assoc($result);
+
+$budget_used = ($row["c1_x"] * $row["optimal_x"]) + ($row["c1_y"] * $row["optimal_y"]);
+$budget_remaining = $row["c1_rhs"] - $budget_used;
+
+$volunteer_used = ($row["c2_x"] * $row["optimal_x"]) + ($row["c2_y"] * $row["optimal_y"]);
+$volunteer_remaining = $row["c2_rhs"] - $volunteer_used;
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Optimization Result - ORSystem</title>
+    <title>Budget Allocation Result - ORSystem</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,15 +51,12 @@ $row = mysqli_fetch_assoc($result);
     <div class="card shadow">
 
         <div class="card-header bg-success text-white text-center">
-            <h3>Optimization Result</h3>
+            <h3>Recommended Budget Allocation Result</h3>
         </div>
 
         <div class="card-body">
 
-            <h4>
-                Project:
-                <?php echo htmlspecialchars($row["project_title"]); ?>
-            </h4>
+            <h4>Project: <?php echo htmlspecialchars($row["project_title"]); ?></h4>
 
             <p class="text-muted">
                 Campus Event Budget Allocation System
@@ -61,67 +64,90 @@ $row = mysqli_fetch_assoc($result);
 
             <hr>
 
-            <h5>Objective Function</h5>
-
-            <div class="alert alert-primary">
-                <?php echo htmlspecialchars($row["objective_type"]); ?>
-                Z =
-                <?php echo htmlspecialchars($row["profit_x"]); ?>X +
-                <?php echo htmlspecialchars($row["profit_y"]); ?>Y
-            </div>
-
-            <hr>
-
-            <h5>Optimal Solution</h5>
+            <h5>Recommended Activities</h5>
 
             <table class="table table-bordered table-striped text-center">
-
                 <thead class="table-dark">
                     <tr>
-                        <th>Decision Variable</th>
-                        <th>Description</th>
-                        <th>Optimal Value</th>
+                        <th>Activity</th>
+                        <th>Recommended Quantity</th>
+                        <th>Benefit Per Unit</th>
+                        <th>Total Benefit</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td>X</td>
                         <td>Activity 1</td>
                         <td><?php echo htmlspecialchars($row["optimal_x"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["profit_x"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["optimal_x"] * $row["profit_x"]); ?></td>
                     </tr>
 
                     <tr>
-                        <td>Y</td>
                         <td>Activity 2</td>
                         <td><?php echo htmlspecialchars($row["optimal_y"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["profit_y"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["optimal_y"] * $row["profit_y"]); ?></td>
                     </tr>
                 </tbody>
-
             </table>
 
             <div class="alert alert-success text-center">
-
                 <h4>
-                    Optimum Objective Value:
+                    Maximum Total Benefit:
                     <?php echo htmlspecialchars($row["objective_value"]); ?>
                 </h4>
-
             </div>
 
             <hr>
 
-            <h5>Interpretation</h5>
+            <h5>Resource Usage Summary</h5>
+
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Resource</th>
+                        <th>Available</th>
+                        <th>Used</th>
+                        <th>Remaining</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Budget (RM)</td>
+                        <td><?php echo htmlspecialchars($row["c1_rhs"]); ?></td>
+                        <td><?php echo number_format($budget_used, 2); ?></td>
+                        <td><?php echo number_format($budget_remaining, 2); ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Volunteer Hours</td>
+                        <td><?php echo htmlspecialchars($row["c2_rhs"]); ?></td>
+                        <td><?php echo number_format($volunteer_used, 2); ?></td>
+                        <td><?php echo number_format($volunteer_remaining, 2); ?></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h5>System Interpretation</h5>
 
             <div class="alert alert-info">
-                The optimal solution shows the best number of Activity 1 and Activity 2
-                that should be selected based on the objective function and constraints entered.
+                The system recommends choosing
+                <strong><?php echo htmlspecialchars($row["optimal_x"]); ?></strong>
+                unit(s) of Activity 1 and
+                <strong><?php echo htmlspecialchars($row["optimal_y"]); ?></strong>
+                unit(s) of Activity 2 because this combination gives the highest total benefit
+                without exceeding the available budget, volunteer hours, and activity limit.
             </div>
 
             <div class="mt-3">
 
                 <a href="input.php" class="btn btn-primary">
-                    New Optimization
+                    New Recommendation
                 </a>
 
                 <a href="history.php" class="btn btn-warning">
