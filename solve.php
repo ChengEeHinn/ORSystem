@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 
 $user_id = $_SESSION["user_id"];
 
-$project_title = $_POST["project_title"];
-$objective_type = $_POST["objective_type"];
+$project_title = mysqli_real_escape_string($conn, $_POST["project_title"]);
+$objective_type = mysqli_real_escape_string($conn, $_POST["objective_type"]);
 
 $profit_x = floatval($_POST["profit_x"]);
 $profit_y = floatval($_POST["profit_y"]);
@@ -54,45 +54,42 @@ function feasible(
     $c3_x, $c3_y, $c3_rhs
 )
 {
-    if ($x < -0.0001 || $y < -0.0001)
+    if ($x < -0.0001 || $y < -0.0001) {
         return false;
+    }
 
-    if (($c1_x * $x + $c1_y * $y) > $c1_rhs + 0.0001)
+    if (($c1_x * $x + $c1_y * $y) > $c1_rhs + 0.0001) {
         return false;
+    }
 
-    if (($c2_x * $x + $c2_y * $y) > $c2_rhs + 0.0001)
+    if (($c2_x * $x + $c2_y * $y) > $c2_rhs + 0.0001) {
         return false;
+    }
 
-    if (($c3_x * $x + $c3_y * $y) > $c3_rhs + 0.0001)
+    if (($c3_x * $x + $c3_y * $y) > $c3_rhs + 0.0001) {
         return false;
+    }
 
     return true;
 }
 
 $points = [];
 
-/* Origin */
 $points[] = [0, 0];
 
-/* Constraint intersections */
-$p = intersection($c1_x, $c1_y, $c1_rhs,
-                  $c2_x, $c2_y, $c2_rhs);
+$p = intersection($c1_x, $c1_y, $c1_rhs, $c2_x, $c2_y, $c2_rhs);
 if ($p) $points[] = $p;
 
-$p = intersection($c1_x, $c1_y, $c1_rhs,
-                  $c3_x, $c3_y, $c3_rhs);
+$p = intersection($c1_x, $c1_y, $c1_rhs, $c3_x, $c3_y, $c3_rhs);
 if ($p) $points[] = $p;
 
-$p = intersection($c2_x, $c2_y, $c2_rhs,
-                  $c3_x, $c3_y, $c3_rhs);
+$p = intersection($c2_x, $c2_y, $c2_rhs, $c3_x, $c3_y, $c3_rhs);
 if ($p) $points[] = $p;
 
-/* x = 0 intercepts */
 if ($c1_y != 0) $points[] = [0, $c1_rhs / $c1_y];
 if ($c2_y != 0) $points[] = [0, $c2_rhs / $c2_y];
 if ($c3_y != 0) $points[] = [0, $c3_rhs / $c3_y];
 
-/* y = 0 intercepts */
 if ($c1_x != 0) $points[] = [$c1_rhs / $c1_x, 0];
 if ($c2_x != 0) $points[] = [$c2_rhs / $c2_x, 0];
 if ($c3_x != 0) $points[] = [$c3_rhs / $c3_x, 0];
@@ -120,16 +117,12 @@ foreach ($points as $point) {
         $bestPoint = [$x, $y];
         $bestValue = $z;
     } else {
-
         if ($objective_type == "Maximize") {
-
             if ($z > $bestValue) {
                 $bestValue = $z;
                 $bestPoint = [$x, $y];
             }
-
         } else {
-
             if ($z < $bestValue) {
                 $bestValue = $z;
                 $bestPoint = [$x, $y];
@@ -139,13 +132,10 @@ foreach ($points as $point) {
 }
 
 if ($bestPoint === null) {
-
     $optimal_x = 0;
     $optimal_y = 0;
     $bestValue = 0;
-
 } else {
-
     $optimal_x = round($bestPoint[0], 4);
     $optimal_y = round($bestPoint[1], 4);
     $bestValue = round($bestValue, 4);
@@ -155,22 +145,17 @@ $sql = "INSERT INTO lp_problems (
     user_id,
     project_title,
     objective_type,
-
     profit_x,
     profit_y,
-
     c1_x,
     c1_y,
     c1_rhs,
-
     c2_x,
     c2_y,
     c2_rhs,
-
     c3_x,
     c3_y,
     c3_rhs,
-
     optimal_x,
     optimal_y,
     objective_value
@@ -179,31 +164,27 @@ VALUES (
     '$user_id',
     '$project_title',
     '$objective_type',
-
     '$profit_x',
     '$profit_y',
-
     '$c1_x',
     '$c1_y',
     '$c1_rhs',
-
     '$c2_x',
     '$c2_y',
     '$c2_rhs',
-
     '$c3_x',
     '$c3_y',
     '$c3_rhs',
-
     '$optimal_x',
     '$optimal_y',
     '$bestValue'
 )";
 
-mysqli_query($conn, $sql);
-
-$problem_id = mysqli_insert_id($conn);
-
-header("Location: result.php?id=" . $problem_id);
-exit();
+if (mysqli_query($conn, $sql)) {
+    $problem_id = mysqli_insert_id($conn);
+    header("Location: result.php?id=" . $problem_id);
+    exit();
+} else {
+    die("Database insert failed: " . mysqli_error($conn));
+}
 ?>
