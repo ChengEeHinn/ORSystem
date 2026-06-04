@@ -159,19 +159,19 @@
                     <tr>
                         <td>1</td>
                         <td>LIM XIN YI</td>
-                        <td>22402xx</td>
+                        <td>2240250</td>
                     </tr>
 
                     <tr>
                         <td>2</td>
-                        <td>NURUL HIDAYAH BINTI XX</td>
-                        <td>22402xx</td>
+                        <td>NURUL HIDAYAH BINTI FARAN</td>
+                        <td>2240251</td>
                     </tr>
 
                     <tr>
                         <td>3</td>
-                        <td>AHMAD THAQIF BIN XX</td>
-                        <td>22402xx</td>
+                        <td>AHMAD THAQIF BIN BADRUL HISYAM</td>
+                        <td>2240231</td>
                     </tr>
 
                     <tr>
