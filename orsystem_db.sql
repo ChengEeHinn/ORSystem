@@ -48,7 +48,7 @@ VALUES (
     1,
     'Lim Xin Yi',
     'limxinyi04@gmail.com',
-    '123456'
+    '$2y$10$zWKJ./GzW75Vcq/7kBiCMetXNbEiDT/19bPpHunrD.RawFHxBhpU6'
 );
 
 INSERT INTO lp_problems (
