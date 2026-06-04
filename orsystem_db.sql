@@ -22,6 +22,8 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS orsystem_db;
+USE orsystem_db;
 
 --
 -- Table structure for table `lp_problems`
@@ -75,7 +77,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `created_at`) VALUES
-(1, 'Lim Xin Yi', 'limxinyi04@gmail.com', '123456', '2026-06-04 17:20:12');
+(1, 'Lim Xin Yi', 'limxinyi04@gmail.com', '$2y$10$zWKJ./GzW75Vcq/7kBiCMetXNbEiDT/19bPpHunrD.RawFHxBhpU6', '2026-06-04 17:20:12');
 
 --
 -- Indexes for dumped tables
