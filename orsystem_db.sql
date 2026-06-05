@@ -51,12 +51,6 @@ CREATE TABLE `lp_problems` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `lp_problems`
---
-
-INSERT INTO `lp_problems` (`id`, `user_id`, `project_title`, `objective_type`, `profit_x`, `profit_y`, `c1_x`, `c1_y`, `c1_rhs`, `c2_x`, `c2_y`, `c2_rhs`, `c3_x`, `c3_y`, `c3_rhs`, `optimal_x`, `optimal_y`, `objective_value`, `created_at`) VALUES
-(1, 1, 'Campus Event Budget Allocation Demo', 'Maximize', 50, 38, 100, 80, 1000, 2, 3, 40, 1, 1, 20, 10, 0, 500, '2026-06-04 17:20:12');
 
 -- --------------------------------------------------------
 
@@ -71,13 +65,6 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `created_at`) VALUES
-(1, 'Lim Xin Yi', 'limxinyi04@gmail.com', '$2y$10$zWKJ./GzW75Vcq/7kBiCMetXNbEiDT/19bPpHunrD.RawFHxBhpU6', '2026-06-04 17:20:12');
 
 --
 -- Indexes for dumped tables
