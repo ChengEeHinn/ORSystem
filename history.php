@@ -9,6 +9,24 @@ if (!isset($_SESSION["user_id"])) {
 
 $user_id = $_SESSION["user_id"];
 
+// --- 1. HANDLE DELETION LOGIC ---
+if (isset($_GET['delete_id'])) {
+    // Sanitize input to prevent SQL injection
+    $delete_id = mysqli_real_escape_string($conn, $_GET['delete_id']);
+    
+    // Ensure the record belongs to the logged-in user before deleting
+    $delete_sql = "DELETE FROM lp_problems WHERE id = '$delete_id' AND user_id = '$user_id'";
+    
+    if (mysqli_query($conn, $delete_sql)) {
+        // Redirect back to the same page to refresh the list without query parameters
+        header("Location: history.php"); 
+        exit();
+    } else {
+        echo "<script>alert('Error deleting record: " . mysqli_error($conn) . "');</script>";
+    }
+}
+
+// Fetch history records
 $sql = "SELECT * FROM lp_problems
         WHERE user_id = '$user_id'
         ORDER BY created_at DESC";
@@ -79,6 +97,12 @@ $result = mysqli_query($conn, $sql);
                                 <a href="result.php?id=<?php echo $row["id"]; ?>"
                                    class="btn btn-sm btn-primary">
                                    View Result
+                                </a>
+                                
+                                <a href="history.php?delete_id=<?php echo $row["id"]; ?>"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this record?');">
+                                   Delete
                                 </a>
                             </td>
                         </tr>
