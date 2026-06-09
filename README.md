@@ -65,12 +65,12 @@ Users enter benefit scores and resource limits through a simple web form. The sy
 | Category | Technology |
 |----------|------------|
 | Backend | PHP |
-| Database | MySQL / MariaDB |
-| Frontend | HTML5, CSS3, Bootstrap 5.3.3 |
+| Database | MySQL |
+| Frontend | HTML5, Bootstrap 5.3.3 |
 | Local Server | XAMPP (Apache + MySQL) |
 | Database Tool | phpMyAdmin |
 
-**Recommended environment:** PHP 8.x, MariaDB 10.4+ (based on project development setup).
+**Recommended environment:** PHP 8.x, MySQL (based on project development setup).
 
 ---
 
